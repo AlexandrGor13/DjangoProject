@@ -18,7 +18,6 @@ from .models import (
 class UserAdmin(admin.ModelAdmin):
     list_display = ['username', 'first_name', 'last_name', 'email', 'phone_number']
     search_fields = ['first_name', 'last_name', 'email']
-    readonly_fields = ['created_at', 'updated_at']
 
 
 # Администрирование категорий товаров
@@ -27,7 +26,6 @@ class CategoryAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name',)}
     list_display = ['name', 'parent_category']
     search_fields = ['name']
-    readonly_fields = ['created_at', 'updated_at']
 
 
 # Администрирование продуктов
@@ -36,7 +34,6 @@ class ProductAdmin(admin.ModelAdmin):
     list_display = ['title', 'specifications', 'price', 'stock_quantity', 'is_active', 'category']
     list_filter = ['is_active', 'category']
     search_fields = ['title', 'description']
-    readonly_fields = ['created_at', 'updated_at']
 
 
 # Инлайн отображение позиций заказов

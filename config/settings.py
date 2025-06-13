@@ -124,4 +124,6 @@ STATICFILES_DIRS = [BASE_DIR / "static"]
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # AUTH_USER_MODEL = 'YourAppName.YourClassName'
-# AUTH_USER_MODEL = 'backend.User'
+AUTH_USER_MODEL = 'shop_app.User'
+
+CART_SESSION_ID = 'cart'

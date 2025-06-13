@@ -1,19 +1,16 @@
 from django.db import models
-# from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser
 from django.utils.translation import gettext_lazy as get_txt
 
 
-class User(models.Model):
+class User(AbstractUser):
     """Модель пользователя"""
-    username = models.CharField(max_length=10, unique=True)
-    email = models.EmailField(unique=True)
-    password = models.CharField(max_length=20)
-    first_name = models.CharField(get_txt('Имя'), max_length=150)
-    last_name = models.CharField(get_txt('Фамилия'), max_length=150)
     phone_number = models.CharField(max_length=15, blank=True, null=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
+    groups = models.ManyToManyField(
+        'auth.Group',
+        related_name='%(app_label)s_%(class)s_groups',
+        blank=True,
+    )
     class Meta:
         verbose_name = get_txt('Пользователь')
         verbose_name_plural = get_txt('Пользователи')
@@ -27,8 +24,6 @@ class Category(models.Model):
     name = models.CharField(max_length=255)
     parent_category = models.ForeignKey('self', on_delete=models.SET_NULL, blank=True, null=True)
     slug = models.SlugField(unique=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
         verbose_name = get_txt('Категория')
@@ -46,17 +41,15 @@ class Product(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2)
     category = models.ForeignKey('Category', on_delete=models.CASCADE)
     stock_quantity = models.PositiveIntegerField(default=0)
-    img = models.ImageField(upload_to='./img', blank=True, null=True)
+    img = models.ImageField(upload_to='./static/img', blank=True, null=True)
     is_active = models.BooleanField(default=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
         verbose_name = get_txt('Товар')
         verbose_name_plural = get_txt('Товар')
 
     def __str__(self):
-        return self.title
+        return f'{self.title} {self.specifications}'
 
 
 class Order(models.Model):
@@ -107,6 +100,12 @@ class ShoppingCart(models.Model):
     class Meta:
         verbose_name = get_txt('Корзина покупок')
         verbose_name_plural = get_txt('Корзины покупок')
+
+    def get_total_price(self):
+        summ = 0
+        for item in self.items.all():
+            summ += item.product.price * item.quantity
+        return summ
 
     def __str__(self):
         return f'Корзина покупок {self.user}'

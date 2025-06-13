@@ -21,5 +21,5 @@ import shop_app.urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include(shop_app.urls.urlpatterns))
+    path('', include(shop_app.urls.urlpatterns)),
 ]
