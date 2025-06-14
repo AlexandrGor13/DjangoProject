@@ -23,7 +23,7 @@
                     <td><img src="/{{ product.img }}" width="50" height="50"></td>
                     <td>{{ product.title }}</td>
                     <td>{{ item.quantity }}</td>
-                    <td>Удалить</td>
+                    <td><a href="{% url 'cart_remove' product.id%}">Удалить</a></a></td>
                     <td class="num">{{ product.price }} руб.</td>
                     <td class="num">{{ item.total_price }} руб.</td>
                 </tr>

@@ -37,7 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'shop_app.apps.Shop_appConfig',
+    'app_shop',
+    'app_users',
+    'app_cart',
 ]
 
 MIDDLEWARE = [
@@ -55,7 +57,7 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -66,6 +68,7 @@ TEMPLATES = [
         },
     },
 ]
+
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
@@ -124,6 +127,8 @@ STATICFILES_DIRS = [BASE_DIR / "static"]
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # AUTH_USER_MODEL = 'YourAppName.YourClassName'
-AUTH_USER_MODEL = 'shop_app.User'
+AUTH_USER_MODEL = 'app_users.User'
 
 CART_SESSION_ID = 'cart'
+SESSION_COOKIE_AGE = 4 * 24 * 60 * 60
+SESSION_ENGINE = 'django.contrib.sessions.backends.cache'

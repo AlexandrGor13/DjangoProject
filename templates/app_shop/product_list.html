@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% load static%}
+
+{% block title %}Список товаров{% endblock %}
+
+{% block user_auth %}
+
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+        <div class="row">
+            <div class="col-3">
+                <div class="btn-group-vertical" role="group">
+                    {% for category in categories %}
+                        {% if category.parent_category == None %}
+                            {% if category.category_set.count == 0 %}
+                                <button type="button" class="btn btn-secondary">
+                                    {{ category.name}}
+                                </button>
+                            {% else %}
+                                <div class="btn-group" role="group">
+                                    <button id="btnGroupDrop" type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                      {{ category.name}}
+                                    </button>
+                                    <ul class="dropdown-menu dropdown-menu-dark">
+                                        {% for category_i in category.category_set.all %}
+                                            <li><a class="dropdown-item" href="#">
+                                                {{ category_i.name}}
+                                            </a></li>
+                                        {% endfor %}
+                                    </ul>
+                                  </div>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="col-9">
+                <h1>Список товаров</h1>
+                <ul class="list-group">
+                    {% for product in products %}
+                        <li class="list-group-item">
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <img src="/{{product.img}}" class="img-thumbnail" alt="{{ product.title }}" width="150" height="150">
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <h5>
+                                            Название:
+                                            <a href="{% url 'product_detail' product.pk %}">
+                                                {{ product.title}} {{ product.specifications}}
+                                            </a>
+                                        </h5>
+                                        <p>Описание: {{product.description}}</p>
+                                        <p>Цена: {{product.price}} руб.</p>
+                                        <p>В наличии: {{product.stock_quantity}}</p>
+                                    </div>
+                                </div>
+                                <form method="post" class="mt-4">
+                                          {% csrf_token %}
+                                    <div class="row text-end">
+                                        <div class="col-5">
+                                        </div>
+                                        <div class="col-2">
+                                            <label class="form-label" for="quantity">Количество</label>
+                                        </div>
+                                        <div class="col-2">
+                                            <input type="number" id="quantity" class="form-control" min="0" max="{{product.stock_quantity}}" name="quantity" value="0"/>
+                                            <input type="hidden" name="product" class="form-control" value="{{product.id}}"/>
+                                        </div>
+                                        <div class="col-3">
+                                            <button type="submit" class="btn btn-warning">Добавить в корзину</button>
+                                        </div>
+                                    </div>
+                                </form>
+                        </li>
+                    {% empty %}
+                         <li class="list-group-item">Нет товаров</li>
+                    {% endfor %}
+
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+{% endblock %}

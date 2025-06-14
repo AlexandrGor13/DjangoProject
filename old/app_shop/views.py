@@ -6,7 +6,7 @@ from django.contrib.auth import login, authenticate, logout
 from django.urls import reverse_lazy
 from django.contrib import messages
 
-from .forms import SignUpForm, LoginForm, CartAddProductForm
+from .forms import SignUpForm, LoginForm
 from .models import Product, Category, User, ShoppingCart, CartItem
 
 def signup_view(request):
@@ -73,24 +73,24 @@ class CategoryView(ListView):
     model = Category
     template_name = 'shop_app/category_list.html'
     context_object_name = 'categories'
-#
-# @require_POST
-# def cart_add(request, product_id):
-#     cart = Cart(request)
-#     product = get_object_or_404(Product, id=product_id)
-#     form = CartAddProductForm(request.POST)
-#     if form.is_valid():
-#         cd = form.cleaned_data
-#         cart.add(product=product,
-#                  quantity=cd['quantity'],
-#                  update_quantity=cd['update'])
-#     return redirect('shop_app/cart_detail.html')
-#
-# def cart_remove(request, product_id):
-#     cart = Cart(request)
-#     product = get_object_or_404(Product, id=product_id)
-#     cart.remove(product)
-#     return redirect('shop_app/cart_detail.html')
+
+@require_POST
+def cart_add(request, product_id):
+    cart = Cart(request)
+    product = get_object_or_404(Product, id=product_id)
+    form = CartAddProductForm(request.POST)
+    if form.is_valid():
+        cd = form.cleaned_data
+        cart.add(product=product,
+                 quantity=cd['quantity'],
+                 update_quantity=cd['update'])
+    return redirect('shop_app/cart_detail.html')
+
+def cart_remove(request, product_id):
+    cart = Cart(request)
+    product = get_object_or_404(Product, id=product_id)
+    cart.remove(product)
+    return redirect('shop_app/cart_detail.html')
 
 class CartView(DetailView):
     """Представление для отображения категорий"""
