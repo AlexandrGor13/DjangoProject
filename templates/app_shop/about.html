@@ -4,10 +4,5 @@
 
 {% block content %}
     <h1>Добро пожаловать!</h1>
-    <form method="post" class="mt-4">
-      {% csrf_token %}
-      {{ form.as_p }}
-      <button type="submit" class="btn btn-warning">Добавить в корзину</button>
-    </form>
     <p>{{ content }}</p>
 {% endblock %}

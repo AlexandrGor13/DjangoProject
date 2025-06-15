@@ -19,9 +19,11 @@ from django.urls import path, include
 
 import app_shop.urls
 import app_cart.urls
+import app_users.urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(app_shop.urls.urlpatterns)),
     path('', include(app_cart.urls.urlpatterns)),
+    path('', include(app_users.urls.urlpatterns)),
 ]

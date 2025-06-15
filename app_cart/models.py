@@ -53,26 +53,6 @@ class Cart(models.Model):
     def __str__(self):
         return f'Корзина покупок {self.user}'
 
-    # @property
-    # def cart(self):
-    #     return {item.product.id: item.quantity for item in self.items.all()}
-    #
-    #
-    # def add(self, product_id: int, quantity=1) -> None:
-    #     """
-    #     Добавление товара
-    #     """
-    #     product_id = str(product_id)
-    #
-    #     if product_id not in self.cart:
-    #         self.cart.update({product_id: {'quantity': 1}})
-    #     else:
-    #         self.cart[product_id]['quantity'] += quantity
-    #
-    #     self.cart[product_id]['quantity'] = quantity
-    #
-    #     self.save()
-
 
 
 class CurrentCart():

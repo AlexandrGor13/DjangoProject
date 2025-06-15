@@ -129,6 +129,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # AUTH_USER_MODEL = 'YourAppName.YourClassName'
 AUTH_USER_MODEL = 'app_users.User'
 
-CART_SESSION_ID = 'cart'
 SESSION_COOKIE_AGE = 4 * 24 * 60 * 60
 SESSION_ENGINE = 'django.contrib.sessions.backends.cache'

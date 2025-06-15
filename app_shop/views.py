@@ -1,17 +1,15 @@
-from http import HTTPStatus
+from unicodedata import category
 
-from django.http import JsonResponse
 from django.views.generic import ListView, DetailView
 from django.views.generic.base import TemplateView
-from django.views.decorators.http import require_POST
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth import login, authenticate, logout
 from django.urls import reverse_lazy
 from django.contrib import messages
 
 from .models import Product, Category
+from .forms import CartAddProductForm, SetCaregoryForm
 from app_cart.models import Cart
-from app_cart.forms import CartAddProductForm
+from app_cart.cart import add_to_cart
 
 
 def index(request):
@@ -31,24 +29,26 @@ class AboutView(TemplateView):
 class ProductView(TemplateView):
     """Представление для отображения товара"""
     template_name = 'app_shop/product_list.html'
-    success_url = reverse_lazy('cart_detail')
-    form = CartAddProductForm()
+    # success_url = reverse_lazy('cart_detail')
+    form_cart = CartAddProductForm()
+    form_category = CartAddProductForm()
+    category = None
 
     def post(self, request, *args, **kwargs):
-        print(request.POST.get('quantity'))
-        print(request.POST.get('product'))
-        return render(request, 'app_shop/product_list.html')
-
-    def form_valid(self, form):
-        # Прочитать данные из `form.cleaned_data`
-        print(form.cleaned_data)
-        return super().form_valid(form)
+        if request.POST.get('product') and request.POST.get('quantity'):
+            add_to_cart(request)
+            return redirect('cart_detail')
+        else:
+            self.category = request.POST.get('category')
+            return render(request,self.template_name, context=self.get_context_data(**kwargs))
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['products'] = Product.objects.all()
+        context['products'] = Product.objects.all() if not self.category else Product.objects.filter(
+            category=Category.objects.get(name=self.category))
         context['categories'] = Category.objects.all()
-        context['form'] = self.form
+        context['form_cart'] = self.form_cart
+        context['form_category'] = self.form_category
         return context
 
 
@@ -64,6 +64,7 @@ class CategoryView(ListView):
     model = Category
     template_name = 'app_shop/category_list.html'
     context_object_name = 'categories'
+
 
 # @require_POST
 # def cart_add(request, product_id):
