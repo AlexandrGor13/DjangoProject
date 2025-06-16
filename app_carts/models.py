@@ -31,11 +31,6 @@ class CartItem(models.Model):
         """
         return self.quantity * self.product.price
 
-    @property
-    def availability(self):
-        """
-        """
-        return True if self.quantity <= self.product.stock_quantity else False
 
 
 class Cart(models.Model):
@@ -54,91 +49,3 @@ class Cart(models.Model):
         return f'Корзина покупок {self.user}'
 
 
-class CurrentCart():
-    """Корзина с товарами для покупки"""
-
-    def __init__(self, request: HttpRequest):
-        self.session = request.session
-        cart = self.session.get(settings.CART_SESSION_ID)
-
-        if not cart:
-            cart = self.session[settings.CART_SESSION_ID] = {}
-
-        self.cart = cart
-
-    def save(self):
-        """ Сохранение изменений в корзине в сессии"""
-        self.session.modified = True
-
-    def add(self, product_id: UUID, quantity=1, updated=False) -> None:
-        """
-        Добавление товара
-        """
-        product_id = str(product_id)
-
-        if product_id not in self.cart:
-            self.cart.update({product_id: {'quantity': 1}})
-        else:
-            self.cart[product_id]['quantity'] += quantity
-
-        if updated:
-            self.cart[product_id]['quantity'] = quantity
-
-        self.save()
-
-    def remove(self, product_id: UUID) -> None:
-        """
-        Удаление 1 товара из корзины.
-        """
-        product_id_str = str(product_id)
-
-        if product_id_str in self.cart.keys():
-            if self.cart[product_id_str]['quantity'] <= 1:
-                self.delete_all(product_id)
-            else:
-                self.cart[product_id_str]['quantity'] -= 1
-                self.save()
-
-    def delete_all(self, product_id: UUID) -> None:
-        """
-        Удаление товара из корзины.
-        """
-        product_id = str(product_id)
-
-        if product_id in self.cart.keys():
-            self.cart.pop(product_id)
-            self.save()
-
-    def clear(self):
-        """Очистка корзины"""
-        self.session.pop(settings.CART_SESSION_ID)
-        self.save()
-
-    def __iter__(self) -> CartItem:
-        products = Product.objects.filter(product_id__in=self.cart.keys())
-
-        for product in products:
-            quantity = self.cart.get(str(product.product_id)).get('quantity')
-            yield CartItem(product=product,
-                           quantity=quantity)
-
-    def __len__(self) -> int:
-        """
-        Количество товаров в корзине.
-        """
-        return len(self.cart.keys())
-
-    def get_total_price(self) -> Decimal:
-        """
-        Получение общей стоимости товаров.
-        """
-        return sum([item.total_price for item in self])
-
-    def get_quantity(self, product_id: UUID) -> int:
-        """
-        Возвращает количество товаров по product_id
-        """
-        data_product = self.cart.get(str(product_id))
-        if data_product:
-            return data_product.get('quantity')
-        return 0

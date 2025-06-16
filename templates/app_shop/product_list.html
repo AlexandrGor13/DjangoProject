@@ -17,21 +17,19 @@
                         {% for category in categories %}
                             {% if category.parent_category == None %}
                                 {% if category.category_set.count == 0 %}
-                                    <button type="submit" class="btn btn-success" onclick=" name='category'; value='{{category.name}}'">
+                                    <button type="submit" class="btn btn-outline-dark" style="border-radius: 0" onclick=" name='category'; value='{{category.name}}'">
                                         {{ category.name}}
                                     </button>
                                 {% else %}
                                     <div class="btn-group" role="group">
-                                        <button id="btnGroupDrop" type="submit" class="btn btn-success dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" onclick=" name='category'; value='{{category.name}}'">
+                                        <button id="btnGroupDrop" type="submit" class="btn btn-outline-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" onclick=" name='category'; value='{{category.name}}'">
                                           {{ category.name}}
                                         </button>
-                                        <ul class="dropdown-menu ">
+                                        <ul class="dropdown-menu"  aria-labelledby="btnGroupDrop" style="background: lightgray">
                                             {% for category_i in category.category_set.all %}
-                                                <p style="height: 25px">
-                                                    <button id="btnGroupDrop1" type="submit" class="btn btn-online-success" aria-expanded="false" style="width: 180px" onclick=" name='category'; value='{{category_i.name}}'">
-                                                        {{ category_i.name}}
-                                                    </button>
-                                                </p>
+                                                <button id="btnGroupDropChild" type="submit" class="btn dropdown-item" aria-expanded="false" style="width: 220px" onclick=" name='category'; value='{{category_i.name}}'">
+                                                    {{ category_i.name}}
+                                                </button>
                                             {% endfor %}
                                         </ul>
                                       </div>
@@ -88,12 +86,6 @@
             </div>
         </div>
     </div>
-
-
-
-
-
-
-
+<p/>
 
 {% endblock %}

@@ -4,7 +4,7 @@
     Ваша корзина для покупок
 {% endblock %}
 {% block content %}
-    <h1 class="text-center">Ваша корзина для покупок</h1>
+    <h1 class="text-center">Ваш заказ</h1>
     <table class="cart">
         <thead>
         <tr>
@@ -43,7 +43,36 @@
         </tbody>
     </table>
     <p>
-        <a href="{% url 'products' %}" class="btn btn-info">Продолжить покупки</a>
-        <a href="#" class="btn btn-warning">Оформить заказ</a>
+        <form method="post">
+            {% csrf_token %}
+            <div style="display: flex">
+                <p>
+                    <label for="id_zip_code" style="width: 80px">Индекс:</label>
+                    <input type="text" name="zip_code" required id="id_zip_code" value="{{address.zip_code}}" style="width: 120px">
+                </p>
+                <p>
+                    <label for="id_country" style="width: 80px">Страна:</label>
+                    <input type="text" name="country" required id="id_country" value="{{address.country}}" style="width: 120px">
+                </p>
+                <p>
+                    <label for="id_state" style="width: 80px">Область:</label>
+                    <input type="text" name="state" required id="id_state" value="{{address.state}}" style="width: 180px">
+                </p>
+                <p>
+                    <label for="id_city" style="width: 80px">Город:</label>
+                    <input type="text" name="city" required id="id_city" value="{{address.city}}" style="width: 150px">
+                </p>
+                <p>
+                    <label for="id_address_line1" style="width: 80px">Адрес:</label>
+                    <input type="text" name="address_line1" required id="id_address_line1" value="{{address.address_line1}} {{address.address_line2}}" style="width: 420px">
+                </p>
+            </div>
+
+            <p>
+                <a href="{% url 'products' %}" class="btn btn-danger">Отменить</a>
+                <button class="btn btn-warning" type="submit">Оформить заказ</button>
+            </p>
+        </form>
     </p>
+
 {% endblock %}

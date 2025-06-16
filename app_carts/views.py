@@ -1,7 +1,7 @@
 from django.views.generic import TemplateView
 from django.shortcuts import render
 
-from .cart import get_cart, remove_from_cart
+from .cart import get_cart, remove_from_cart, get_current_user
 from .forms import CartAddProductForm
 
 
