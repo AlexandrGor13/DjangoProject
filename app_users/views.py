@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, authenticate, logout
 
-from app_cart.cart import move_cart
+from app_carts.cart import move_cart
 from .forms import SignUpForm, LoginForm
 
 def signup_view(request):

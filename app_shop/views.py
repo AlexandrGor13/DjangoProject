@@ -8,8 +8,8 @@ from django.contrib import messages
 
 from .models import Product, Category
 from .forms import CartAddProductForm, SetCaregoryForm
-from app_cart.models import Cart
-from app_cart.cart import add_to_cart
+from app_carts.models import Cart
+from app_carts.cart import add_to_cart
 
 
 def index(request):
