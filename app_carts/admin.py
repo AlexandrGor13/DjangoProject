@@ -15,4 +15,3 @@ class CartItemAdmin(admin.ModelAdmin):
 class CartAdmin(admin.ModelAdmin):
     filter_horizontal = ['items']  # Удобнее выбирать элементы корзины
     list_display = ['user']
-

@@ -1,6 +1,7 @@
 from django.contrib import admin
 from .models import User
 
+
 # Регистрация пользователей с использованием встроенного интерфейса управления пользователями
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):

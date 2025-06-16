@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}
+    Ваша корзина для покупок
+{% endblock %}
+{% block content %}
+    <h1 class="text-center">Ваша корзина для покупок</h1>
+    <table class="cart">
+        <thead>
+        <tr>
+            <th style="width: 300px; text-align: center">Изображение</th>
+            <th style="width: 350px; text-align: center">Товар</th>
+            <th style="width: 50px; text-align: center">Количество</th>
+            <th style="width: 200px; text-align: center">Удалить</th>
+            <th style="width: 200px; text-align: center">Цена за единицу</th>
+            <th style="width: 200px; text-align: center">Цена</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for item in cart.items.all %}
+            {% with product=item.product %}
+                <tr>
+                    <td style="width: 300px; text-align: center"><img src="/{{ product.img }}" width="100" height="100"></td>
+                    <td style="width: 350px; text-align: center">{{ product.title }} {{product.specifications}}</td>
+                    <td style="width: 50px; text-align: center">{{ item.quantity }}</td>
+                    <td style="width: 200px; text-align: center">
+                        <form method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="product" class="form-control" value="{{product.id}}"/>
+                            <button type="submit" class="btn btn-danger">Удалить</button>
+                        </form>
+                    </td>
+                    <td class="num" style="width: 200px; text-align: center">{{ product.price }} руб.</td>
+                    <td class="num" style="width: 200px; text-align: center">{{ item.total_price }} руб.</td>
+                </tr>
+            {% endwith %}
+        {% endfor %}
+        <tr class="total">
+            <td style="width: 200px; text-align: center">Всего</td>
+            <td colspan="4"></td>
+            <td class="num" style="width: 200px; text-align: center;font-weight:700">{{ cart.get_total_price }} руб.</td>
+        </tr>
+        </tbody>
+    </table>
+    <p>
+        <a href="{% url 'products' %}" class="btn btn-info">Продолжить покупки</a>
+        <a href="#" class="btn btn-warning">Перейти к оформлению заказа</a>
+    </p>
+{% endblock %}

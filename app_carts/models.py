@@ -54,9 +54,9 @@ class Cart(models.Model):
         return f'Корзина покупок {self.user}'
 
 
-
 class CurrentCart():
     """Корзина с товарами для покупки"""
+
     def __init__(self, request: HttpRequest):
         self.session = request.session
         cart = self.session.get(settings.CART_SESSION_ID)
