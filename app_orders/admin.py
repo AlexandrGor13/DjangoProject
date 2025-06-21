@@ -25,9 +25,8 @@ class OrderAdmin(admin.ModelAdmin):
 # Административная регистрация модели DeliveryAddress
 @admin.register(DeliveryAddress)
 class DeliveryAddressAdmin(admin.ModelAdmin):
-    list_display = (
-        'user', 'address_line1', 'city', 'state', 'zip_code', 'country', 'default')  # Поля для отображения в списке
-    search_fields = ('address_line1', 'city', 'state', 'country')  # Поисковые поля
+    list_display = ('address_line', 'city', 'state', 'zip_code', 'country', 'default')  # Поля для отображения в списке
+    search_fields = ('address_line', 'city', 'state', 'country')  # Поисковые поля
     list_filter = ('default',)  # Возможность фильтрации по полю default
     raw_id_fields = ('user',)  # Поле связи с пользователем для удобства выборки большого числа пользователей
 

@@ -17,9 +17,9 @@ class CategoryAdmin(admin.ModelAdmin):
 # Администрирование продуктов
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ['title', 'specifications', 'price', 'stock_quantity', 'is_active', 'category']
+    list_display = ['title', 'specifications', 'price', 'discount', 'stock_quantity', 'is_active', 'category']
     list_filter = ['is_active', 'category']
-    search_fields = ['title', 'description']
+    search_fields = ['title', 'description', 'price', 'discount']
 
 
 # Административная регистрация модели Review

@@ -25,3 +25,13 @@ def get_anonymous_user(request):
         cart = Cart.objects.create(user=anonymous_user)
     cart.save()
     return anonymous_user
+
+
+def create_user(username, email, password):
+    user = User.objects.create(
+        username=username,
+        email=email,
+        password=password
+    )
+    user.save()
+    return user

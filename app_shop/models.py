@@ -22,6 +22,7 @@ class Product(models.Model):
     specifications = models.CharField(max_length=255)
     description = models.TextField(blank=True, null=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
+    discount = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     category = models.ForeignKey('Category', on_delete=models.CASCADE)
     stock_quantity = models.PositiveIntegerField(default=0)
     img = models.ImageField(upload_to='./static/img', blank=True, null=True)
@@ -34,10 +35,12 @@ class Product(models.Model):
     def __str__(self):
         return f'{self.title} {self.specifications}'
 
+    def get_discounted_price(self):
+        return format(self.price * (1 - self.discount/100), '.2f')
+
 
 class Review(models.Model):
     """Отзыв клиента"""
-    # user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     user = models.ForeignKey('app_users.User', on_delete=models.CASCADE)
     product = models.ForeignKey('Product', on_delete=models.CASCADE)
     rating = models.PositiveSmallIntegerField(choices=[

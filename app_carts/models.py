@@ -1,15 +1,6 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as get_txt
 
-from decimal import Decimal
-from uuid import UUID
-
-from django.conf import settings
-from django.http import HttpRequest
-
-from app_shop.models import Product
-from app_users.models import User
-
 
 class CartItem(models.Model):
     """Элемент корзины"""
@@ -29,8 +20,7 @@ class CartItem(models.Model):
         """
         Вычисляет полную стоимость текущего товара в корзине
         """
-        return self.quantity * self.product.price
-
+        return format(self.quantity * self.product.price * (1 - self.product.discount / 100), '.2f')
 
 
 class Cart(models.Model):
@@ -43,9 +33,9 @@ class Cart(models.Model):
         verbose_name_plural = get_txt('Корзины покупок')
 
     def get_total_price(self):
-        return sum([item.product.price * item.quantity for item in self.items.all()])
+        return format(
+            sum([item.product.price * (1 - item.product.discount / 100) * item.quantity for item in self.items.all()]),
+            '.2f')
 
     def __str__(self):
         return f'Корзина покупок {self.user}'
-
-

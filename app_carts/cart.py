@@ -17,6 +17,8 @@ def add_to_cart(request):
     if not current_cart:
         current_cart = Cart.objects.create(user=current_user)
         current_cart.items.set([current_cart_item])
+    elif not current_cart.items:
+        current_cart.items = current_cart_item
     else:
         if current_cart.items.filter(product=current_product).count():
             cart_item = current_cart.items.get(product=current_product)
@@ -54,3 +56,13 @@ def get_cart(request):
         cart = Cart.objects.create(user=current_user)
         cart.save()
     return cart
+
+
+def clear_cart(request):
+    current_user = get_current_user(request)
+    cart = Cart.objects.filter(user=current_user).first()
+    if cart:
+        for item in cart.items.all():
+            item.delete()
+        return True
+    return False

@@ -14,16 +14,14 @@ def get_address(request):
 
 def create_address(request):
     current_user = get_current_user(request)
-    address_line1 = request.POST.get('address_line1')
-    address_line2 = request.POST.get('address_line2')
+    address_line = request.POST.get('address_line')
     city = request.POST.get('city')
     state = request.POST.get('state')
     zip_code = request.POST.get('zip_code')
     country = request.POST.get('country')
     address = DeliveryAddress(
         user=current_user,
-        address_line1=address_line1,
-        address_line2=address_line2,
+        address_line=address_line,
         city=city,
         state=state,
         zip_code=zip_code,

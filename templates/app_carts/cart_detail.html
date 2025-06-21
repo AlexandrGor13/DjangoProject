@@ -13,6 +13,7 @@
             <th style="width: 50px; text-align: center">Количество</th>
             <th style="width: 200px; text-align: center">Удалить</th>
             <th style="width: 200px; text-align: center">Цена за единицу</th>
+            <th style="width: 200px; text-align: center">Скидка</th>
             <th style="width: 200px; text-align: center">Цена</th>
         </tr>
         </thead>
@@ -31,6 +32,7 @@
                         </form>
                     </td>
                     <td class="num" style="width: 200px; text-align: center">{{ product.price }} руб.</td>
+                    <td class="num" style="width: 200px; text-align: center">{{ product.discount }} %</td>
                     <td class="num" style="width: 200px; text-align: center">{{ item.total_price }} руб.</td>
                 </tr>
             {% endwith %}
@@ -44,6 +46,6 @@
     </table>
     <p>
         <a href="{% url 'products' %}" class="btn btn-info">Продолжить покупки</a>
-        <a href="{% url 'order_detail' %}" class="btn btn-warning">Перейти к оформлению заказа</a>
+        <a href="{% url 'order_from_cart' %}" class="btn btn-warning">Перейти к оформлению заказа</a>
     </p>
 {% endblock %}

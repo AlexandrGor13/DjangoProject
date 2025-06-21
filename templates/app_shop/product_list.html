@@ -43,45 +43,49 @@
                 <h1>Список товаров</h1>
                 <ul class="list-group">
                     {% for product in products %}
-                        <li class="list-group-item">
-                                <div class="row">
-                                    <div class="col-sm-3">
-                                        <img src="/{{product.img}}" class="img-thumbnail" alt="{{ product.title }}" width="150" height="150">
-                                    </div>
-                                    <div class="col-sm-9">
-                                        <h5>
-                                            Название:
-                                            <a href="{% url 'product_detail' product.pk %}">
-                                                {{ product.title}} {{ product.specifications}}
-                                            </a>
-                                        </h5>
-                                        <p>Описание: {{product.description}}</p>
-                                        <p>Цена: {{product.price}} руб.</p>
-                                        <p>В наличии: {{product.stock_quantity}}</p>
-                                    </div>
-                                </div>
-                                <form method="post">
-                                          {% csrf_token %}
-                                    <div class="row text-end">
-                                        <div class="col-6">
+                        {% if product.is_active %}
+                            <li class="list-group-item">
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <img src="/{{product.img}}" class="img-thumbnail" alt="{{ product.title }}" width="150" height="150">
                                         </div>
-                                        <div class="col-2">
-                                            <label class="form-label" for="quantity">Количество</label>
-                                        </div>
-                                        <div class="col-1" >
-                                            <input type="number" id="quantity" class="form-control" min="1" max="{{product.stock_quantity}}" name="quantity" value="1" style="width: 80px"/>
-                                            <input type="hidden" name="product" class="form-control" value="{{product.id}}"/>
-                                        </div>
-                                        <div class="col-3">
-                                            <button type="submit" class="btn btn-warning">Добавить в корзину</button>
+                                        <div class="col-sm-9">
+                                            <h5>
+                                                Название:
+                                                <a href="{% url 'product_detail' product.pk %}">
+                                                    {{ product.title}} {{ product.specifications}}
+                                                </a>
+                                            </h5>
+                                            <p>Описание: {{product.description}}</p>
+                                            <p>Цена: {{product.price}} руб.</p>
+                                            {% if product.discount %}
+                                            <p>Цена по скидке: {{product.get_discounted_price}} руб.</p>
+                                            {% endif %}
+                                            <p>В наличии: {{product.stock_quantity}}</p>
                                         </div>
                                     </div>
-                                </form>
-                        </li>
+                                    <form method="post">
+                                              {% csrf_token %}
+                                        <div class="row text-end">
+                                            <div class="col-6">
+                                            </div>
+                                            <div class="col-2">
+                                                <label class="form-label" for="quantity">Количество</label>
+                                            </div>
+                                            <div class="col-1" >
+                                                <input type="number" id="quantity" class="form-control" min="1" max="{{product.stock_quantity}}" name="quantity" value="1" style="width: 80px"/>
+                                                <input type="hidden" name="product" class="form-control" value="{{product.id}}"/>
+                                            </div>
+                                            <div class="col-3">
+                                                <button type="submit" class="btn btn-warning">Добавить в корзину</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                            </li>
+                        {% endif %}
                     {% empty %}
                          <li class="list-group-item">Нет товаров</li>
                     {% endfor %}
-
                 </ul>
             </div>
         </div>
