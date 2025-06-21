@@ -6,7 +6,7 @@ connection = sqlite3.connect('db.sqlite3')
 cursor = connection.cursor()
 
 # Выполнить SQL-запрос
-cursor.execute("SELECT * FROM app_shop_category")
+cursor.execute("SELECT * FROM app_shop_product")
 rows = cursor.fetchall()
 
 # Получить имена столбцов
@@ -16,7 +16,7 @@ results = [dict(zip(columns, row)) for row in rows]
 json_data = json.dumps(results, indent=4, ensure_ascii=False)
 
 # Сохранить данные в файл
-with open('category.json', 'w') as json_file:
+with open('products.json', 'w') as json_file:
     json_file.write(json_data)
 
 # Закрыть соединение

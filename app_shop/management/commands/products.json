@@ -1,0 +1,38 @@
+[
+    {
+        "id": 1,
+        "title": "арматура",
+        "specifications": "Ø 6 мм",
+        "description": "",
+        "price": 50,
+        "discount": 0,
+        "stock_quantity": 100,
+        "img": "static/img/armatura.webp",
+        "is_active": 1,
+        "category_id": 2
+    },
+    {
+        "id": 2,
+        "title": "арматура",
+        "specifications": "Ø  20 мм",
+        "description": "",
+        "price": 2000,
+        "discount": 0,
+        "stock_quantity": 4000,
+        "img": "static/img/armatura.webp",
+        "is_active": 1,
+        "category_id": 2
+    },
+    {
+        "id": 3,
+        "title": "арматура",
+        "specifications": "Ø  16 мм",
+        "description": "",
+        "price": 1500,
+        "discount": 0,
+        "stock_quantity": 2000,
+        "img": "static/img/armatura.webp",
+        "is_active": 1,
+        "category_id": 2
+    }
+]

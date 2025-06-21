@@ -46,5 +46,17 @@ def get_last_order(request):
     else:
         return None
 
+
 def get_items_by_order(current_order: Order):
     return OrderItem.objects.filter(order=current_order).all()
+
+
+def move_order(request, user):
+    current_user = get_current_user(request)
+    order = get_last_order(request)
+    order.user = user
+    order.save()
+    address = get_address(request)
+    address.user = user
+    address.save()
+    current_user.delete()

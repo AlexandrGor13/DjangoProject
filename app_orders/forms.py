@@ -1,8 +1,7 @@
 from django import forms
 
 class DeliveryAddressForm(forms.Form):
-    address_line1 = forms.CharField()
-    address_line2 = forms.CharField()
+    address_line = forms.CharField()
     city = forms.CharField()
     state = forms.CharField()
     zip_code = forms.CharField()
