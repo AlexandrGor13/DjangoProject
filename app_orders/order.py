@@ -11,7 +11,6 @@ def create_order(request):
     order = Order.objects.create(
         user=current_user,
         total_amount=0,
-        payment_status='pending',
         shipping_address=get_address(request),
     )
     for item in cart.items.all():

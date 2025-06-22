@@ -7,3 +7,10 @@ class DeliveryAddressForm(forms.Form):
     zip_code = forms.CharField()
     country = forms.CharField()
 
+# class OrderPaymentForm(forms.Form):
+#     method = forms.ChoiceField(choices=[
+#         ('card', 'Карта'),
+#         ('cash', 'Наличные'),
+#         ('yookassa', 'ЮKassa'),
+#     ])
+

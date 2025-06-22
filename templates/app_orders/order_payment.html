@@ -37,31 +37,34 @@
         </tbody>
     </table>
     <p>
-        <form method="post">
-            {% csrf_token %}
-            <div style="display: flex">
-                <p>
-                    <label for="id_zip_code" style="width: 80px">Индекс:</label>
-                    <label type="text" name="zip_code" required id="id_zip_code" style="width: 120px">{{address.zip_code}}</label>
-                </p>
-                <p>
-                    <label for="id_country" style="width: 80px">Страна:</label>
-                    <label type="text" name="country" required id="id_country" style="width: 120px">{{address.country}}</label>
-                </p>
-                <p>
-                    <label for="id_state" style="width: 80px">Область:</label>
-                    <label type="text" name="state" required id="id_state" style="width: 180px">{{address.state}}</label>
-                </p>
-                <p>
-                    <label for="id_city" style="width: 80px">Город:</label>
-                    <label type="text" name="city" required id="id_city" style="width: 150px">{{address.city}}</label>
-                </p>
-                <p>
-                    <label for="id_address_line" style="width: 80px">Адрес:</label>
-                    <label type="text" name="address_line" required id="id_address_line" style="width: 420px">{{address.address_line}}</label>
-                </p>
-            </div>
-        </form>
+        <div style="display: flex">
+            <p>
+                <label for="id_zip_code" style="width: 80px">Индекс:</label>
+                <label type="text" name="zip_code" required id="id_zip_code" style="width: 120px">{{address.zip_code}}</label>
+            </p>
+            <p>
+                <label for="id_country" style="width: 80px">Страна:</label>
+                <label type="text" name="country" required id="id_country" style="width: 120px">{{address.country}}</label>
+            </p>
+            <p>
+                <label for="id_state" style="width: 80px">Область:</label>
+                <label type="text" name="state" required id="id_state" style="width: 180px">{{address.state}}</label>
+            </p>
+            <p>
+                <label for="id_city" style="width: 80px">Город:</label>
+                <label type="text" name="city" required id="id_city" style="width: 150px">{{address.city}}</label>
+            </p>
+            <p>
+                <label for="id_address_line" style="width: 80px">Адрес:</label>
+                <label type="text" name="address_line" required id="id_address_line" style="width: 420px">{{address.address_line}}</label>
+            </p>
+        </div>
     </p>
+    <form method="post" class="mt-4">
+        {% csrf_token %}
+        <p>
+            <button type="submit" class="btn btn-success">Оплатить</button>
+        </p>
+    </form>
 
 {% endblock %}

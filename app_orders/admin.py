@@ -17,8 +17,7 @@ class OrderItemInline(admin.TabularInline):
 class OrderAdmin(admin.ModelAdmin):
     """Управление заказами"""
     inlines = [OrderItemInline]
-    list_display = ['id', 'user', 'total_amount', 'payment_status', 'order_date']
-    list_filter = ['payment_status']
+    list_display = ['id', 'user', 'total_amount', 'order_date']
     search_fields = ['user__first_name', 'user__last_name']
     readonly_fields = ['order_date', 'shipped_date', 'completed_date']
 
@@ -29,13 +28,13 @@ class DeliveryAddressAdmin(admin.ModelAdmin):
     list_display = ('address_line', 'city', 'state', 'zip_code', 'country', 'default')
     search_fields = ('address_line', 'city', 'state', 'country')
     list_filter = ('default',)
-    raw_id_fields = ('user',)  # Поле связи с пользователем для удобства выборки большого числа пользователей
+    raw_id_fields = ('user',)
 
 
 @admin.register(Payment)
 class PaymentAdmin(admin.ModelAdmin):
     """Административная регистрация модели Payment"""
-    list_display = ('order', 'amount', 'method', 'status', 'timestamp')
+    list_display = ('order', 'amount', 'status', 'timestamp')
     search_fields = ('transaction_id', 'order__id')
-    list_filter = ('status', 'method')
+    list_filter = ('status',)
     readonly_fields = ('timestamp',)

@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}
+    Ваш заказ №{{order.id}}
+{% endblock %}
+{% block content %}
+    {% if status == 'paid' %}
+        <h1>Ваш заказ успешно оплачен!</h1>
+        <p><h3>Спасибо за покупку.</h3></p>
+    {% else %}
+        {% if status == 'canceled' %}
+            <h1>Оплата заказа была отменена.</h1>
+        {% else %}
+            <h1>Заказ ожидает оплату.</h1>
+        {% endif %}
+    {% endif %}
+{% endblock %}

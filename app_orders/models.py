@@ -1,16 +1,16 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as get_txt
 
+STATUS_CHOICES = (
+        ('paid', 'Оплачен'),
+        ('pending', 'Ожидает оплату'),
+        ('canceled', 'Отменён')
+    )
 
 class Order(models.Model):
     """Заказ"""
     user = models.ForeignKey('app_users.User', on_delete=models.PROTECT)
     total_amount = models.DecimalField(max_digits=10, decimal_places=2)
-    payment_status = models.CharField(max_length=50, choices=[
-        ('paid', 'Paid'),
-        ('pending', 'Pending'),
-        ('failed', 'Failed'),
-    ])
     shipping_address = models.ForeignKey('DeliveryAddress', on_delete=models.PROTECT)
     order_date = models.DateTimeField(auto_now_add=True)
     shipped_date = models.DateTimeField(null=True, blank=True)
@@ -69,17 +69,8 @@ class Payment(models.Model):
     """Платёж"""
     order = models.ForeignKey('Order', on_delete=models.CASCADE)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
-    method = models.CharField(max_length=50, choices=[
-        ('card', 'Карта'),
-        ('cash', 'Наличные'),
-        ('paypal', 'PayPal'),
-    ])
-    transaction_id = models.CharField(max_length=100, unique=True)
-    status = models.CharField(max_length=50, choices=[
-        ('paid', 'Оплачен'),
-        ('pending', 'Ожидает оплату'),
-        ('canceled', 'Отменён'),
-    ])
+    transaction_id = models.CharField(max_length=100, unique=True, null=True)
+    status = models.CharField(max_length=50, choices=STATUS_CHOICES, default='pending')
     timestamp = models.DateTimeField(auto_now_add=True)
 
     class Meta:

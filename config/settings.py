@@ -10,7 +10,11 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 from pathlib import Path
-from os import getenv
+
+from environs import Env
+
+env = Env()
+env.read_env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -133,5 +137,7 @@ AUTH_USER_MODEL = 'app_users.User'
 SESSION_COOKIE_AGE = 4 * 24 * 60 * 60
 SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
 
-SHOP_ACCOUNT_ID = getenv('SHOP_ACCOUNT_ID')
-SHOP_SECRET_KEY = getenv('SHOP_SECRET_KEY')
+YOOKASSA_ACCOUNT_ID = env('YOOKASSA_ACCOUNT_ID')
+YOOKASSA_SECRET_KEY = env('YOOKASSA_SECRET_KEY')
+
+# CSRF_TRUSTED_ORIGINS = ['https://example.com']
