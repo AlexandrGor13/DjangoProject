@@ -7,7 +7,9 @@
 <h1>Список заказов</h1>
     <ul class="list-group">
         {% for order, order_items in orders.items %}
-            <h1 class="text-center">Заказ №{{order.id}}</h1>
+            <h1 class="text-center">
+                <a href="{% url 'order_detail' order.pk %}">Заказ №{{order.id}}</a>
+            </h1>
             <table class="order">
                 <thead>
                 <tr>

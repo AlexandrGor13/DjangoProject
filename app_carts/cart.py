@@ -41,7 +41,6 @@ def move_cart(request, session_key):
         current_user = User.objects.get(id=request.user.id)
         cart = Cart.objects.filter(user=current_user).first()
         anonymous_user = User.objects.filter(username=session_key).first()
-        print(anonymous_user, anonymous_user.id)
         if anonymous_user:
             cart_anonymous_user = Cart.objects.get(user=anonymous_user)
             if not cart:

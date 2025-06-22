@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 from pathlib import Path
+from os import getenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -131,3 +132,6 @@ AUTH_USER_MODEL = 'app_users.User'
 
 SESSION_COOKIE_AGE = 4 * 24 * 60 * 60
 SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
+
+SHOP_ACCOUNT_ID = getenv('SHOP_ACCOUNT_ID')
+SHOP_SECRET_KEY = getenv('SHOP_SECRET_KEY')

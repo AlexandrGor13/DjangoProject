@@ -70,15 +70,15 @@ class Payment(models.Model):
     order = models.ForeignKey('Order', on_delete=models.CASCADE)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     method = models.CharField(max_length=50, choices=[
-        ('card', 'Card'),
-        ('cash', 'Cash'),
+        ('card', 'Карта'),
+        ('cash', 'Наличные'),
         ('paypal', 'PayPal'),
     ])
     transaction_id = models.CharField(max_length=100, unique=True)
     status = models.CharField(max_length=50, choices=[
-        ('paid', 'Paid'),
-        ('pending', 'Pending'),
-        ('canceled', 'Canceled'),
+        ('paid', 'Оплачен'),
+        ('pending', 'Ожидает оплату'),
+        ('canceled', 'Отменён'),
     ])
     timestamp = models.DateTimeField(auto_now_add=True)
 
