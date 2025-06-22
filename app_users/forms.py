@@ -11,4 +11,4 @@ class SignUpForm(forms.Form):
 
 class LoginForm(AuthenticationForm):
     username = forms.CharField(label='Имя пользователя')
-    password = forms.CharField(label='Пароль', widget=forms.PasswordInput)
+    password = forms.CharField(widget=forms.PasswordInput, label='Пароль' )

@@ -5,7 +5,8 @@ from django.contrib.auth import login
 from app_carts.cart import get_cart, remove_from_cart
 from app_orders.forms import DeliveryAddressForm
 from app_orders.delivery import get_address, create_address
-from app_orders.order import create_order, get_last_order, get_items_by_order, move_order
+from app_orders.models import Order
+from app_orders.order import create_order, get_last_order, get_items_by_order, move_order, get_orders
 from app_users.forms import SignUpForm
 from app_users.user import get_current_user, create_user
 
@@ -74,14 +75,12 @@ class OrderView(TemplateView):
 
 class OrderListView(ListView):
     """Отображение списка заказов"""
+    model = Order
     template_name = 'app_orders/orders_list.html'
-    form_delivery = DeliveryAddressForm()
+    context_object_name = 'orders'
 
     def get_context_data(self, **kwargs):
-        last_order = get_last_order(self.request)
-
         context = super().get_context_data(**kwargs)
-        context['form_delivery'] = self.form_delivery
-        context['address'] = get_address(self.request)
-        context['last_order'] = get_last_order(self.request)
+        orders = {order: get_items_by_order(order) for order in get_orders(self.request)}
+        context['orders'] = orders
         return context

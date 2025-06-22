@@ -26,8 +26,8 @@ def login_view(request):
     form = LoginForm(data=request.POST or None)
     if request.method == 'POST':
         if form.is_valid():
-            username = form.cleaned_data['username']
-            password = form.cleaned_data['password']
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
             user = authenticate(username=username, password=password)
             if user:
                 current_session_key = request.session.session_key

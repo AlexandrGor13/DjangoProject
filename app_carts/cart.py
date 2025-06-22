@@ -41,11 +41,13 @@ def move_cart(request, session_key):
         current_user = User.objects.get(id=request.user.id)
         cart = Cart.objects.filter(user=current_user).first()
         anonymous_user = User.objects.filter(username=session_key).first()
+        print(anonymous_user, anonymous_user.id)
         if anonymous_user:
             cart_anonymous_user = Cart.objects.get(user=anonymous_user)
-            if not cart or not cart.items.count():
-                cart_anonymous_user.user = current_user
-                cart_anonymous_user.save(update_fields=["user"])
+            if not cart:
+                cart = Cart.objects.create(user=current_user)
+            if not cart.items.count():
+                cart.items.set(cart_anonymous_user.items.all())
                 anonymous_user.delete()
 
 

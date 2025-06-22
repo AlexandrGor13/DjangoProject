@@ -6,9 +6,9 @@
 {% block content %}
 <h1>Список заказов</h1>
     <ul class="list-group">
-        {% for order in orders %}
+        {% for order, order_items in orders.items %}
             <h1 class="text-center">Заказ №{{order.id}}</h1>
-            <table class="cart">
+            <table class="order">
                 <thead>
                 <tr>
                     <th style="width: 300px; text-align: center">Изображение</th>
@@ -20,7 +20,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                {% for item in items %}
+                {% for item in order_items %}
                     {% with product=item.product %}
                         <tr>
                             <td style="width: 300px; text-align: center"><img src="/{{ product.img }}" width="100" height="100"></td>
@@ -39,36 +39,6 @@
                 </tr>
                 </tbody>
             </table>
-            <p>
-                <form method="post">
-                    {% csrf_token %}
-                    <div style="display: flex">
-                        <p>
-                            <label for="id_zip_code" style="width: 80px">Индекс:</label>
-                            <input type="text" name="zip_code" required id="id_zip_code" value="{{address.zip_code}}" style="width: 120px">
-                        </p>
-                        <p>
-                            <label for="id_country" style="width: 80px">Страна:</label>
-                            <input type="text" name="country" required id="id_country" value="{{address.country}}" style="width: 120px">
-                        </p>
-                        <p>
-                            <label for="id_state" style="width: 80px">Область:</label>
-                            <input type="text" name="state" required id="id_state" value="{{address.state}}" style="width: 180px">
-                        </p>
-                        <p>
-                            <label for="id_city" style="width: 80px">Город:</label>
-                            <input type="text" name="city" required id="id_city" value="{{address.city}}" style="width: 150px">
-                        </p>
-                        <p>
-                            <label for="id_address_line" style="width: 80px">Адрес:</label>
-                            <input type="text" name="address_line" required id="id_address_line" value="{{address.address_line}}" style="width: 420px">
-                        </p>
-                    </div>
-
-
-                </form>
-            </p>
-        {% endfor %}
         {% empty %}
             <li class="list-group-item">У вас еще нет заказов</li>
         {% endfor %}

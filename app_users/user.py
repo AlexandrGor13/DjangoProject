@@ -28,7 +28,7 @@ def get_anonymous_user(request):
 
 
 def create_user(username, email, password):
-    user = User.objects.create(
+    user = User.objects.create_user(
         username=username,
         first_name=username,
         email=email,
