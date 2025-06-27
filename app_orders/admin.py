@@ -17,8 +17,9 @@ class OrderItemInline(admin.TabularInline):
 class OrderAdmin(admin.ModelAdmin):
     """Управление заказами"""
     inlines = [OrderItemInline]
-    list_display = ['id', 'user', 'total_amount', 'order_date']
+    list_display = ['id', 'user', 'total_amount', 'status', 'order_date']
     search_fields = ['user__first_name', 'user__last_name']
+    list_filter = ('status',)
     readonly_fields = ['order_date', 'shipped_date', 'completed_date']
 
 

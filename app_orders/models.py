@@ -1,17 +1,19 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as get_txt
 
-STATUS_CHOICES = (
-        ('paid', 'Оплачен'),
-        ('pending', 'Ожидает оплату'),
-        ('canceled', 'Отменён')
-    )
+
 
 class Order(models.Model):
     """Заказ"""
+    STATUS_CHOICES = (
+        ('status1', 'На погрузке'),
+        ('status2', 'В доставке'),
+        ('status3', 'Отгружен')
+    )
     user = models.ForeignKey('app_users.User', on_delete=models.PROTECT)
     total_amount = models.DecimalField(max_digits=10, decimal_places=2)
     shipping_address = models.ForeignKey('DeliveryAddress', on_delete=models.PROTECT)
+    status = models.CharField(max_length=50, choices=STATUS_CHOICES, default='status1')
     order_date = models.DateTimeField(auto_now_add=True)
     shipped_date = models.DateTimeField(null=True, blank=True)
     completed_date = models.DateTimeField(null=True, blank=True)
@@ -67,6 +69,11 @@ class DeliveryAddress(models.Model):
 
 class Payment(models.Model):
     """Платёж"""
+    STATUS_CHOICES = (
+        ('paid', 'Оплачен'),
+        ('pending', 'Ожидает оплату'),
+        ('canceled', 'Отменён')
+    )
     order = models.ForeignKey('Order', on_delete=models.CASCADE)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     transaction_id = models.CharField(max_length=100, unique=True, null=True)
