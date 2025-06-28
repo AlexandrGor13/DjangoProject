@@ -8,8 +8,21 @@ authors = [
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
+    "celery[redis]>=5.5.3",
     "django>=5.2",
+    "django-celery-beat>=2.8.1",
+    "django-celery-results>=2.6.0",
     "environs>=14.2.0",
+    "gunicorn>=23.0.0",
     "pillow>=11.2.1",
+    "psycopg2-binary>=2.9.10",
     "yookassa>=3.5.0",
+]
+
+[dependency-groups]
+test = [
+    "beautifulsoup4>=4.13.4",
+    "pytest>=8.4.1",
+    "pytest-django>=4.11.1",
+    "pytest-mock>=3.14.1",
 ]

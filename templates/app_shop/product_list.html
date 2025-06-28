@@ -22,8 +22,11 @@
                                     </button>
                                 {% else %}
                                     <div class="btn-group" role="group">
-                                        <button id="btnGroupDrop" type="submit" class="btn btn-outline-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" onclick=" name='category'; value='{{category.name}}'">
-                                          {{ category.name}}
+                                        <button id="btnGroupDrop" class="btn btn-outline-dark" type="submit" onclick=" name='category'; value='{{category.name}}'" style="width: 220px">
+                                            {{ category.name}}
+                                        </button>
+                                        <button type="button" class="btn btn-outline-dark dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <span class="visually-hidden">Переключатель выпадающего списка</span>
                                         </button>
                                         <ul class="dropdown-menu"  aria-labelledby="btnGroupDrop" style="background: lightgray">
                                             {% for category_i in category.category_set.all %}
@@ -47,7 +50,7 @@
                             <li class="list-group-item">
                                     <div class="row">
                                         <div class="col-sm-3">
-                                            <img src="/{{product.img}}" class="img-thumbnail" alt="{{ product.title }}" width="150" height="150">
+                                            <img src="/{{product.img}}" alt="{{ product.title }}" width="150" height="150">
                                         </div>
                                         <div class="col-sm-9">
                                             <h5>
