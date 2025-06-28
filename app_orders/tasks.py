@@ -17,6 +17,3 @@ def repeat_order_make(payment_id, transaction_id):
         )
         task.enabled = False
         task.save()
-    else:
-        # Необходимая логика при повторной отправке заказа
-        print("Я должна повторно оформлять заказ каждые 10 минут")
