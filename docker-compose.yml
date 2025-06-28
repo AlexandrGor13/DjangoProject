@@ -37,7 +37,7 @@ services:
         uv run python manage.py generate_data &&
         uv run python manage.py create_intervals &&
         uv run gunicorn config.wsgi -b 0.0.0.0:8080 &&
-        uv run celery -A config worker --loglevel=info --concurrency 1 -E &&
+        uv run celery -A config worker --concurrency 1 -E &&
         uv run celery -A config beat -l INFO
       "
 
