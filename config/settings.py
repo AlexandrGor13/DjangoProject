@@ -25,6 +25,8 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django_celery_results",
+    "django_celery_beat",
     "app_shop.apps.AppShopConfig",
     "app_users.apps.AppUsersConfig",
     "app_orders.apps.AppOrdersConfig",
@@ -114,3 +116,4 @@ YOOKASSA_SECRET_KEY = env("YOOKASSA_SECRET_KEY")
 CELERY_BROKER_URL = "redis://localhost:6379/0"
 CELERY_RESULT_BACKEND = "django-db"
 CELERY_TASK_IGNORE_RESULT = False
+CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
