@@ -1,0 +1,17 @@
+[
+    {
+        "id": 1,
+        "every": 1,
+        "period": "days"
+    },
+    {
+        "id": 2,
+        "every": 1,
+        "period": "minutes"
+    },
+    {
+        "id": 3,
+        "every": 10,
+        "period": "seconds"
+    }
+]

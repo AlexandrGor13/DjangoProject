@@ -1,2 +1,5 @@
 /.env
 .venv
+get_intervalshedule.py
+get_categories.py
+get_products.py

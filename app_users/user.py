@@ -1,8 +1,11 @@
 from django.utils.timezone import now, timedelta
+from django_celery_beat.models import PeriodicTask, IntervalSchedule
 
 from app_orders.models import Order
-from .models import User
 from app_carts.models import Cart
+
+# from config.logger import logger
+from .models import User
 
 
 def get_current_user(request):
@@ -27,6 +30,17 @@ def get_anonymous_user(request):
             password="********",
         )
         anonymous_user.save()
+        if not PeriodicTask.objects.filter(name="del_anonymous").exists():
+            try:
+                PeriodicTask.objects.create(
+                    name="del_anonymous",
+                    task="del_anonymous",
+                    interval=IntervalSchedule.objects.get(every=1, period="days"),
+                    start_time=now(),
+                )
+            except Exception as e:
+                print(e)
+                # logger.warning(e)
     cart = Cart.objects.filter(user=anonymous_user).first()
     if not cart:
         cart = Cart.objects.create(user=anonymous_user)
@@ -39,10 +53,9 @@ def del_anonymous_users():
         first_name="anonymous",
         date_joined__lte=now() - timedelta(days=1),
     ).all()
+    print(an_users)
     for an_user in an_users:
-        orders_by_user = Order.objects.filter(user=an_user).all()
-        if not orders_by_user:
-            an_user.delete()
+        an_user.delete()
 
 
 def create_user(username, email, password):

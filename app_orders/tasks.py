@@ -15,5 +15,4 @@ def repeat_order_make(payment_id, transaction_id):
         task = PeriodicTask.objects.get(
             name="Repeat order {}".format(payment_m.order.id)
         )
-        task.enabled = False
-        task.save()
+        task.delete()

@@ -9,6 +9,8 @@ from yookassa import Configuration, Payment
 from app_orders.models import Payment as PaymentModel
 from app_orders.order import get_last_order
 
+# from config.logger import logger
+
 Configuration.account_id = settings.YOOKASSA_ACCOUNT_ID
 Configuration.secret_key = settings.YOOKASSA_SECRET_KEY
 
@@ -78,6 +80,7 @@ def get_status_payment(payment_m: PaymentModel):
                 )
             except Exception as e:
                 print(e)
+                # logger.warning(e)
         payment_m.status = status
         payment_m.save()
         return status

@@ -7,6 +7,4 @@ class Command(BaseCommand):
     help = "Удаление анонимных пользователей"
 
     def handle(self, *args, **options):
-        self.stdout.write("Поиск анонимных пользователей")
         del_anonymous_users()
-        self.stdout.write("Конец поиска")

@@ -1,23 +1,27 @@
-import sqlite3
 import json
+import psycopg2
+from environs import Env
 
-# Подключиться к базе данных SQLite
-connection = sqlite3.connect('db.sqlite3')
+env = Env()
+env.read_env()
+
+connection = psycopg2.connect(
+    dbname=env("POSTGRES_DB"),
+    user=env("POSTGRES_USER"),
+    password=env("POSTGRES_PASSWORD"),
+    host=env("POSTGRES_HOST"),
+)
 cursor = connection.cursor()
 
-# Выполнить SQL-запрос
 cursor.execute("SELECT * FROM app_shop_product")
 rows = cursor.fetchall()
 
-# Получить имена столбцов
 columns = [column[0] for column in cursor.description]
-# Преобразовать строки в JSON
+
 results = [dict(zip(columns, row)) for row in rows]
 json_data = json.dumps(results, indent=4, ensure_ascii=False)
 
-# Сохранить данные в файл
-with open('products.json', 'w') as json_file:
+with open("products.json", "w") as json_file:
     json_file.write(json_data)
 
-# Закрыть соединение
 connection.close()
