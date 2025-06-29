@@ -30,7 +30,9 @@ class Product(models.Model):
     discount = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     category = models.ForeignKey("Category", on_delete=models.CASCADE)
     stock_quantity = models.PositiveIntegerField(default=0)
-    img = models.ImageField(upload_to="./static/img", blank=True, null=True)
+    img = models.ImageField(
+        upload_to=f".{settings.STATIC_URL}img", blank=True, null=True
+    )
     is_active = models.BooleanField(default=True)
 
     class Meta:
