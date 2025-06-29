@@ -111,9 +111,7 @@ class OrderListView(ListView):
         context = super().get_context_data(**kwargs)
         orders = get_orders(self.request)
         if orders:
-            orders = {
-                order: get_items_by_order(order) for order in get_orders(self.request)
-            }
+            orders = {order: get_items_by_order(order) for order in orders}
         context["orders"] = orders
         return context
 
