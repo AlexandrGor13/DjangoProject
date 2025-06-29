@@ -1,10 +1,8 @@
 from django.utils.timezone import now, timedelta
 from django_celery_beat.models import PeriodicTask, IntervalSchedule
 
-from app_orders.models import Order
 from app_carts.models import Cart
 
-# from config.logger import logger
 from .models import User
 
 

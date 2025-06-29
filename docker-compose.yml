@@ -32,15 +32,10 @@ services:
       POSTGRES_DB: "${POSTGRES_DB}"
       POSTGRES_USER: "${POSTGRES_USER}"
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
-    command: bash -c "uv run python manage.py makemigrations &&
-        uv run python manage.py migrate &&
-        uv run python manage.py generate_data &&
-        uv run python manage.py create_intervals &&
+    command: bash -c "uv run python manage.py migrate &&        
         uv run gunicorn config.wsgi -b 0.0.0.0:8080 &&
         uv run celery -A config worker --concurrency 1 -E &&
-        uv run celery -A config beat -l INFO
-      "
-
+        uv run celery -A config beat -l INFO"
     depends_on:
       pg:
         condition: service_healthy

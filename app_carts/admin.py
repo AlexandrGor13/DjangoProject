@@ -13,5 +13,5 @@ class CartItemAdmin(admin.ModelAdmin):
 @admin.register(Cart)
 class CartAdmin(admin.ModelAdmin):
     """Корзины покупателей"""
-    filter_horizontal = ['items']  # Удобнее выбирать элементы корзины
+    filter_horizontal = ['items']
     list_display = ['user']
