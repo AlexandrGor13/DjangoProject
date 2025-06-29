@@ -18,4 +18,9 @@ coverage.xml
 .mypy_cache
 .pytest_cache
 .hypothesis
-#.env
+get_intervalshedule.py
+get_categories.py
+get_products.py
+base1.html
+base2.html
+.env
