@@ -2,6 +2,7 @@ from django.views.generic import ListView, DetailView
 from django.views.generic.base import TemplateView
 from django.shortcuts import render, redirect
 
+from .category import get_subcategories_by_category
 from .models import Product, Category
 from .forms import SetCaregoryForm
 from app_carts.forms import CartAddProductForm
@@ -45,12 +46,7 @@ class ProductView(TemplateView):
         context = super().get_context_data(**kwargs)
         category_set = None
         if self.category:
-            current_category = Category.objects.get(name=self.category)
-            category_set = Category.objects.filter(
-                parent_category_id=current_category.id
-            ).all()
-            if not len(category_set):
-                category_set = [current_category]
+            category_set = get_subcategories_by_category(self.category)
         context["products"] = (
             Product.objects.all()
             if not self.category
