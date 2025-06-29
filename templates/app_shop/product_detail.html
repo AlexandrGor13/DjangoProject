@@ -1,17 +1,21 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block title %}{{ product.title }}{% endblock %}
 
 {% block content %}
 <h1>{{ product.title}} {{product.specifications}}</h1>
 <div class="row text-md-start">
     <div class="col-4">
-         <img src="/{{product.img}}" alt="{{ product.title }}" width="250" height="250">
+        <img src="/{{product.img}}" alt="{{ product.title }}" width="250" height="250">
     </div>
     <div class="col-8" style="align-content: center">
         <p>Описание: {{product.description}}</p>
         <p>Характеристики: {{ product.specifications }}</p>
         <p>Цена: {{product.price}} руб.</p>
+        {% if product.discount %}
+            <p>Цена по скидке: {{product.get_discounted_price}} руб.</p>
+        {% endif %}
+        <p>В наличии: {{product.stock_quantity}}</p>
         <small>Категория:
             {% if product.category.parent_category != None %}
             {{ product.category.parent_category }} ->
