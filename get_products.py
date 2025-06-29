@@ -1,4 +1,6 @@
 import json
+from decimal import Decimal
+
 import psycopg2
 from environs import Env
 
@@ -19,7 +21,15 @@ rows = cursor.fetchall()
 columns = [column[0] for column in cursor.description]
 
 results = [dict(zip(columns, row)) for row in rows]
-json_data = json.dumps(results, indent=4, ensure_ascii=False)
+new_result = []
+for row in results:
+    new_row = {}
+    for key, value in row.items():
+        if type(value) == Decimal:
+            value = str(value)
+        new_row[key] = value
+    new_result.append(new_row)
+json_data = json.dumps(new_result, indent=4, ensure_ascii=False)
 
 with open("products.json", "w") as json_file:
     json_file.write(json_data)
