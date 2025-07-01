@@ -20,6 +20,7 @@ def product(category):
         description="Описание тестового товара",
         price=10.1,
         category=category,
+        stock_quantity=100,
     )
 
 
